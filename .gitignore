@@ -34,3 +34,6 @@ build/
 
 ### properties ###
 /backend/src/main/resources/application.properties
+
+### frontend ###
+/frontend/package-lock.json
