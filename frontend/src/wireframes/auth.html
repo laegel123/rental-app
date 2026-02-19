@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GrabNextDoor - Login/Sign Up</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        .tab-content { display: none; }
+        .tab-content.active { display: block; }
+    </style>
+</head>
+<body class="bg-gray-100">
+
+    <!-- Header -->
+    <header class="bg-white shadow-md sticky top-0 z-10">
+        <div class="container mx-auto px-4 py-3 flex justify-between items-center">
+            <h1 class="text-2xl font-bold text-teal-600">GrabNextDoor</h1>
+            <nav>
+                <a href="#" class="text-gray-600 hover:text-teal-600 px-3">Login</a>
+                <a href="#" class="text-teal-600 hover:bg-teal-700 hover:text-white border border-teal-600 rounded-full px-4 py-2 transition">Sign Up</a>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="container mx-auto px-4 py-8 flex justify-center items-center" style="min-height: calc(100vh - 68px);">
+        <div class="w-full max-w-md">
+            <div class="bg-white rounded-lg shadow-lg p-8">
+                
+                <!-- Tabs -->
+                <div class="flex border-b mb-6">
+                    <button id="login-tab" class="w-1/2 py-2 text-center font-semibold border-b-2 border-teal-600 text-teal-600">Login</button>
+                    <button id="signup-tab" class="w-1/2 py-2 text-center font-semibold text-gray-500">Sign Up</button>
+                </div>
+
+                <!-- Login Form -->
+                <div id="login-content" class="tab-content active">
+                    <form>
+                        <div class="mb-4">
+                            <label for="login-email" class="block text-sm font-medium text-gray-700 mb-1">Email</label>
+                            <input type="email" id="login-email" class="w-full p-2 border border-gray-300 rounded-md" placeholder="you@example.com">
+                        </div>
+                        <div class="mb-6">
+                            <label for="login-password" class="block text-sm font-medium text-gray-700 mb-1">Password</label>
+                            <input type="password" id="login-password" class="w-full p-2 border border-gray-300 rounded-md" placeholder="••••••••">
+                        </div>
+                        <button type="submit" class="w-full bg-teal-600 text-white font-bold py-3 px-4 rounded-full hover:bg-teal-700 transition">Login</button>
+                    </form>
+                </div>
+
+                <!-- Sign Up Form -->
+                <div id="signup-content" class="tab-content">
+                    <form>
+                        <div class="mb-4">
+                            <label for="signup-name" class="block text-sm font-medium text-gray-700 mb-1">Full Name</label>
+                            <input type="text" id="signup-name" class="w-full p-2 border border-gray-300 rounded-md" placeholder="John Doe">
+                        </div>
+                        <div class="mb-4">
+                            <label for="signup-email" class="block text-sm font-medium text-gray-700 mb-1">Email</label>
+                            <input type="email" id="signup-email" class="w-full p-2 border border-gray-300 rounded-md" placeholder="you@example.com">
+                        </div>
+                        <div class="mb-4">
+                            <label for="signup-password" class="block text-sm font-medium text-gray-700 mb-1">Password</label>
+                            <input type="password" id="signup-password" class="w-full p-2 border border-gray-300 rounded-md" placeholder="••••••••">
+                        </div>
+                        <div class="mb-6">
+                            <label for="signup-postal" class="block text-sm font-medium text-gray-700 mb-1">Canadian Postal Code</label>
+                            <input type="text" id="signup-postal" class="w-full p-2 border border-gray-300 rounded-md" placeholder="A1A 1A1">
+                        </div>
+                        <button type="submit" class="w-full bg-teal-600 text-white font-bold py-3 px-4 rounded-full hover:bg-teal-700 transition">Create Account</button>
+                    </form>
+                </div>
+
+            </div>
+        </div>
+    </main>
+
+    <script>
+        const loginTab = document.getElementById('login-tab');
+        const signupTab = document.getElementById('signup-tab');
+        const loginContent = document.getElementById('login-content');
+        const signupContent = document.getElementById('signup-content');
+
+        loginTab.addEventListener('click', () => {
+            loginTab.classList.add('border-teal-600', 'text-teal-600');
+            loginTab.classList.remove('text-gray-500');
+            signupTab.classList.remove('border-teal-600', 'text-teal-600');
+            signupTab.classList.add('text-gray-500');
+            
+            loginContent.classList.add('active');
+            signupContent.classList.remove('active');
+        });
+
+        signupTab.addEventListener('click', () => {
+            signupTab.classList.add('border-teal-600', 'text-teal-600');
+            signupTab.classList.remove('text-gray-500');
+            loginTab.classList.remove('border-teal-600', 'text-teal-600');
+            loginTab.classList.add('text-gray-500');
+
+            signupContent.classList.add('active');
+            loginContent.classList.remove('active');
+        });
+    </script>
+
+</body>
+</html>

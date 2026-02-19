@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GrabNextDoor - User Profile</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-100">
+
+    <!-- Header -->
+    <header class="bg-white shadow-md sticky top-0 z-10">
+        <div class="container mx-auto px-4 py-3 flex justify-between items-center">
+            <h1 class="text-2xl font-bold text-teal-600">GrabNextDoor</h1>
+            <nav>
+                <a href="#" class="text-gray-600 hover:text-teal-600 px-3">My Profile</a>
+                <a href="#" class="text-gray-600 hover:text-teal-600 px-3">Logout</a>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="container mx-auto px-4 py-8">
+        
+        <!-- Profile Header -->
+        <section class="bg-white rounded-lg shadow-lg p-8 mb-8">
+            <div class="flex flex-col md:flex-row items-center">
+                <div class="relative mb-4 md:mb-0 md:mr-8">
+                    <img src="https://placehold.co/150x150?text=You" alt="Profile Picture" class="w-40 h-40 rounded-full border-4 border-teal-500">
+                    <button class="absolute bottom-1 right-1 bg-teal-600 text-white rounded-full p-2 hover:bg-teal-700">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                          <path d="M17.414 2.586a2 2 0 00-2.828 0L7 10.172V13h2.828l7.586-7.586a2 2 0 000-2.828z" />
+                          <path fill-rule="evenodd" d="M2 6a2 2 0 012-2h4a1 1 0 010 2H4v10h10v-4a1 1 0 112 0v4a2 2 0 01-2 2H4a2 2 0 01-2-2V6z" clip-rule="evenodd" />
+                        </svg>
+                    </button>
+                </div>
+                <div class="text-center md:text-left">
+                    <h2 class="text-3xl font-bold text-gray-800">Jane Doe</h2>
+                    <p class="text-gray-600 mt-2">Lover of all things DIY and gardening. Happy to share my tools with my lovely neighbours! Based in Toronto.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- User's Items -->
+        <section>
+            <h2 class="text-2xl font-bold text-gray-800 mb-6">My Items</h2>
+            <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+                
+                <!-- Sample Item Card 1 -->
+                <div class="bg-white rounded-lg shadow-lg overflow-hidden">
+                    <img src="https://placehold.co/400x300?text=Ladder" alt="Item Image" class="w-full h-48 object-cover">
+                    <div class="p-4">
+                        <h3 class="font-bold text-lg mb-2">12-foot Step Ladder</h3>
+                        <div class="flex justify-between items-center mt-4">
+                            <span class="text-xl font-bold text-teal-600">$8<span class="text-sm font-normal text-gray-500">/day</span></span>
+                            <a href="#" class="bg-gray-200 text-gray-800 px-4 py-2 rounded-full hover:bg-gray-300 transition text-sm">Edit</a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Sample Item Card 2 -->
+                <div class="bg-white rounded-lg shadow-lg overflow-hidden">
+                    <img src="https://placehold.co/400x300?text=Shovel" alt="Item Image" class="w-full h-48 object-cover">
+                    <div class="p-4">
+                        <h3 class="font-bold text-lg mb-2">Gardening Shovel</h3>
+                        <div class="flex justify-between items-center mt-4">
+                            <span class="text-xl font-bold text-teal-600">$5<span class="text-sm font-normal text-gray-500">/day</span></span>
+                            <a href="#" class="bg-gray-200 text-gray-800 px-4 py-2 rounded-full hover:bg-gray-300 transition text-sm">Edit</a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 'Add New Item' Card -->
+                <div class="border-2 border-dashed border-gray-300 rounded-lg flex items-center justify-center min-h-[250px] hover:border-teal-500 hover:bg-gray-50 transition">
+                    <button class="text-center text-gray-500">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-12 w-12 mx-auto mb-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1" d="M12 4v16m8-8H4" />
+                        </svg>
+                        Add New Item
+                    </button>
+                </div>
+
+            </div>
+        </section>
+    </main>
+
+</body>
+</html>

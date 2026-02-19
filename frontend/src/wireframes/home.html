@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GrabNextDoor - Home</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-100">
+
+    <!-- Header -->
+    <header class="bg-white shadow-md sticky top-0 z-10">
+        <div class="container mx-auto px-4 py-3 flex justify-between items-center">
+            <h1 class="text-2xl font-bold text-teal-600">GrabNextDoor</h1>
+            <nav>
+                <a href="#" class="text-gray-600 hover:text-teal-600 px-3">Login</a>
+                <a href="#" class="text-teal-600 hover:bg-teal-700 hover:text-white border border-teal-600 rounded-full px-4 py-2 transition">Sign Up</a>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="container mx-auto px-4 py-8">
+        
+        <!-- Search Bar -->
+        <section class="mb-4">
+            <div class="relative">
+                <input type="text" placeholder="Search for items near you..." class="w-full p-4 rounded-full bg-white border border-gray-300 focus:ring-teal-500 focus:border-teal-500">
+                <button class="absolute right-2 top-1/2 -translate-y-1/2 bg-teal-600 text-white rounded-full p-3 hover:bg-teal-700">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                    </svg>
+                </button>
+            </div>
+        </section>
+
+        <!-- Collapsible Filter Section -->
+        <section class="mb-8">
+            <div class="bg-white rounded-lg shadow-md">
+                <!-- Toggle Button -->
+                <button id="filter-toggle" class="w-full p-4 flex justify-between items-center">
+                    <h3 class="font-bold text-gray-800">Filters</h3>
+                    <svg id="filter-arrow" xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 transform transition-transform duration-300" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+                    </svg>
+                </button>
+
+                <!-- Filter Content -->
+                <div id="filter-content" class="max-h-0 overflow-hidden transition-all duration-500 ease-in-out">
+                    <div class="p-4 border-t border-gray-200">
+                        <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                            <!-- Category Filter -->
+                            <div>
+                                <label for="category" class="block text-sm font-medium text-gray-700 mb-1">Category</label>
+                                <select id="category" class="w-full p-2 border border-gray-300 rounded-md">
+                                    <option value="">All Categories</option>
+                                    <option value="tools">Tools</option>
+                                    <option value="electronics">Electronics</option>
+                                    <option value="home">Home & Garden</option>
+                                    <option value="sports">Sports</option>
+                                    <option value="other">Other</option>
+                                </select>
+                            </div>
+
+                            <!-- Price Filter -->
+                            <div>
+                                <label for="price-min" class="block text-sm font-medium text-gray-700 mb-1">Price Range ($/day)</label>
+                                <div class="flex space-x-2">
+                                    <input type="number" id="price-min" placeholder="Min" class="w-1/2 p-2 border border-gray-300 rounded-md">
+                                    <input type="number" id="price-max" placeholder="Max" class="w-1/2 p-2 border border-gray-300 rounded-md">
+                                </div>
+                            </div>
+
+                            <!-- Location Filter -->
+                            <div>
+                                <label for="location-radius" class="block text-sm font-medium text-gray-700 mb-1">Distance from me</label>
+                                <select id="location-radius" class="w-full p-2 border border-gray-300 rounded-md">
+                                    <option value="5km">Within 5 km</option>
+                                    <option value="10km">Within 10 km</option>
+                                    <option value="20km">Within 20 km</option>
+                                    <option value="50km">Within 50 km</option>
+                                </select>
+                            </div>
+                        </div>
+                        <button class="mt-4 w-full bg-teal-600 text-white font-bold py-2 px-4 rounded-md hover:bg-teal-700 transition">Apply Filters</button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Item Grid -->
+        <section>
+            <h2 class="text-2xl font-bold text-gray-800 mb-6">Nearby Items</h2>
+            <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+                
+                <!-- Sample Item Card 1 -->
+                <div class="bg-white rounded-lg shadow-lg overflow-hidden">
+                    <img src="https://placehold.co/400x300?text=Lawn+Mower" alt="Item Image" class="w-full h-48 object-cover">
+                    <div class="p-4">
+                        <h3 class="font-bold text-lg mb-2">Electric Lawn Mower</h3>
+                        <p class="text-gray-600 text-sm mb-2">Available for daily rental</p>
+                        <div class="flex justify-between items-center mt-4">
+                            <span class="text-xl font-bold text-teal-600">$15<span class="text-sm font-normal text-gray-500">/day</span></span>
+                            <a href="#" class="bg-teal-600 text-white px-4 py-2 rounded-full hover:bg-teal-700 transition">Details</a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Sample Item Card 2 -->
+                <div class="bg-white rounded-lg shadow-lg overflow-hidden">
+                    <img src="https://placehold.co/400x300?text=Power+Drill" alt="Item Image" class="w-full h-48 object-cover">
+                    <div class="p-4">
+                        <h3 class="font-bold text-lg mb-2">Cordless Power Drill</h3>
+                        <p class="text-gray-600 text-sm mb-2">Comes with full bit set.</p>
+                        <div class="flex justify-between items-center mt-4">
+                            <span class="text-xl font-bold text-teal-600">$10<span class="text-sm font-normal text-gray-500">/day</span></span>
+                            <a href="#" class="bg-teal-600 text-white px-4 py-2 rounded-full hover:bg-teal-700 transition">Details</a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Add more item cards here -->
+
+            </div>
+        </section>
+    </main>
+
+    <script>
+        const filterToggle = document.getElementById('filter-toggle');
+        const filterContent = document.getElementById('filter-content');
+        const filterArrow = document.getElementById('filter-arrow');
+
+        filterToggle.addEventListener('click', () => {
+            if (filterContent.classList.contains('max-h-0')) {
+                filterContent.classList.remove('max-h-0');
+                filterContent.classList.add('max-h-screen'); // Or a specific max height like 'max-h-96'
+                filterArrow.classList.add('rotate-180');
+            } else {
+                filterContent.classList.remove('max-h-screen');
+                filterContent.classList.add('max-h-0');
+                filterArrow.classList.remove('rotate-180');
+            }
+        });
+    </script>
+
+</body>
+</html>
