@@ -13,6 +13,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.nio.file.AccessDeniedException;
+import java.util.List;
 
 @Service
 public class ItemService {
@@ -65,5 +66,28 @@ public class ItemService {
         item.setCategory(category);
 
         return itemRepository.save(item);
+    }
+
+    @Transactional(readOnly = true)
+    public Item getItemById(Long itemId) {
+        return itemRepository.findById(itemId)
+                .orElseThrow(() -> new RuntimeException("Item not found with id: " + itemId));
+    }
+
+    @Transactional(readOnly = true)
+    public List<Item> getAllItems() {
+        return itemRepository.findAll();
+    }
+
+    @Transactional
+    public void deleteItem(Long itemId, String userEmail) throws AccessDeniedException {
+        Item item = itemRepository.findById(itemId)
+                .orElseThrow(() -> new RuntimeException("Item not found with id: " + itemId));
+
+        if (!item.getOwner().getEmail().equals(userEmail)) {
+            throw new AccessDeniedException("You are not the owner of this item.");
+        }
+
+        itemRepository.delete(item);
     }
 }
