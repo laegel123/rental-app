@@ -79,6 +79,19 @@ public class ItemControllerTest {
     }
 
     @Test
+    @WithMockUser
+    void searchItems_ShouldReturnList() throws Exception {
+        when(itemService.searchItemsByLocation(anyDouble(), anyDouble(), anyDouble())).thenReturn(Arrays.asList(testItem));
+
+        mockMvc.perform(get("/api/items/search")
+                        .param("lat", "43.6532")
+                        .param("lon", "-79.3832")
+                        .param("radius", "10"))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$[0].name").value("Drill"));
+    }
+
+    @Test
     @WithMockUser(username = "test@example.com")
     void deleteItem_ShouldReturnOk() throws Exception {
         doNothing().when(itemService).deleteItem(eq(1L), eq("test@example.com"));

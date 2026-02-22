@@ -29,6 +29,17 @@ public class ItemController {
         return ResponseEntity.ok(items);
     }
 
+    @GetMapping("/search")
+    public ResponseEntity<List<ItemResponseDTO>> searchItems(
+            @RequestParam double lat,
+            @RequestParam double lon,
+            @RequestParam(defaultValue = "10") double radius) {
+        List<ItemResponseDTO> items = itemService.searchItemsByLocation(lat, lon, radius).stream()
+                .map(ItemResponseDTO::new)
+                .collect(Collectors.toList());
+        return ResponseEntity.ok(items);
+    }
+
     @GetMapping("/{id}")
     public ResponseEntity<ItemResponseDTO> getItemById(@PathVariable Long id) {
         Item item = itemService.getItemById(id);

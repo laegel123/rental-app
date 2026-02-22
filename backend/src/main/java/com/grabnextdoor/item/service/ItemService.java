@@ -79,6 +79,13 @@ public class ItemService {
         return itemRepository.findAll();
     }
 
+    @Transactional(readOnly = true)
+    public List<Item> searchItemsByLocation(double lat, double lon, double radiusInKm) {
+        String pointWkt = String.format("POINT(%f %f)", lon, lat); // JTS uses (longitude, latitude) order
+        double radiusInMeters = radiusInKm * 1000;
+        return itemRepository.findItemsWithinRadius(pointWkt, radiusInMeters);
+    }
+
     @Transactional
     public void deleteItem(Long itemId, String userEmail) throws AccessDeniedException {
         Item item = itemRepository.findById(itemId)
