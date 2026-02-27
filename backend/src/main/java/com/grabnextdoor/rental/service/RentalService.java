@@ -78,6 +78,42 @@ public class RentalService {
         return convertToDto(savedRental);
     }
 
+    @Transactional
+    public RentalResponseDto startRental(Long rentalId, User owner) {
+        Rental rental = rentalRepository.findById(rentalId)
+                .orElseThrow(() -> new RuntimeException("Rental not found"));
+
+        if (!rental.getItem().getOwner().getId().equals(owner.getId())) {
+            throw new RuntimeException("Only the owner can start the rental");
+        }
+
+        if (rental.getStatus() != RentalStatus.ACCEPTED) {
+            throw new RuntimeException("Rental is not in ACCEPTED status");
+        }
+
+        rental.setStatus(RentalStatus.IN_PROGRESS);
+        Rental savedRental = rentalRepository.save(rental);
+        return convertToDto(savedRental);
+    }
+
+    @Transactional
+    public RentalResponseDto returnRental(Long rentalId, User owner) {
+        Rental rental = rentalRepository.findById(rentalId)
+                .orElseThrow(() -> new RuntimeException("Rental not found"));
+
+        if (!rental.getItem().getOwner().getId().equals(owner.getId())) {
+            throw new RuntimeException("Only the owner can complete the rental");
+        }
+
+        if (rental.getStatus() != RentalStatus.IN_PROGRESS) {
+            throw new RuntimeException("Rental is not in IN_PROGRESS status");
+        }
+
+        rental.setStatus(RentalStatus.COMPLETED);
+        Rental savedRental = rentalRepository.save(rental);
+        return convertToDto(savedRental);
+    }
+
     private RentalResponseDto convertToDto(Rental rental) {
         RentalResponseDto dto = new RentalResponseDto();
         dto.setId(rental.getId());

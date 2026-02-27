@@ -106,4 +106,28 @@ public class RentalControllerTest {
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.status").value("DECLINED"));
     }
+
+    @Test
+    @WithMockUser(username = "test@example.com")
+    void startRental_ShouldReturnInProgressStatus() throws Exception {
+        rentalResponseDto.setStatus(RentalStatus.IN_PROGRESS);
+        when(userRepository.findByEmail("test@example.com")).thenReturn(Optional.of(testUser));
+        when(rentalService.startRental(eq(1L), any(User.class))).thenReturn(rentalResponseDto);
+
+        mockMvc.perform(post("/rentals/1/start"))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.status").value("IN_PROGRESS"));
+    }
+
+    @Test
+    @WithMockUser(username = "test@example.com")
+    void returnRental_ShouldReturnCompletedStatus() throws Exception {
+        rentalResponseDto.setStatus(RentalStatus.COMPLETED);
+        when(userRepository.findByEmail("test@example.com")).thenReturn(Optional.of(testUser));
+        when(rentalService.returnRental(eq(1L), any(User.class))).thenReturn(rentalResponseDto);
+
+        mockMvc.perform(post("/rentals/1/return"))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.status").value("COMPLETED"));
+    }
 }

@@ -41,6 +41,18 @@ public class RentalController {
         return ResponseEntity.ok(rentalService.declineRental(id, user));
     }
 
+    @PostMapping("/{id}/start")
+    public ResponseEntity<RentalResponseDto> startRental(@PathVariable Long id) {
+        User user = getCurrentUser();
+        return ResponseEntity.ok(rentalService.startRental(id, user));
+    }
+
+    @PostMapping("/{id}/return")
+    public ResponseEntity<RentalResponseDto> returnRental(@PathVariable Long id) {
+        User user = getCurrentUser();
+        return ResponseEntity.ok(rentalService.returnRental(id, user));
+    }
+
     private User getCurrentUser() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String email = authentication.getName();
