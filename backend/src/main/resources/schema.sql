@@ -63,3 +63,14 @@ CREATE TABLE reviews (
     FOREIGN KEY (reviewer_id) REFERENCES users(id) ON DELETE CASCADE,
     FOREIGN KEY (reviewee_id) REFERENCES users(id) ON DELETE CASCADE
 );
+
+-- Create Chat Messages table
+CREATE TABLE chat_messages (
+    id BIGINT AUTO_INCREMENT PRIMARY KEY,
+    rental_id BIGINT NOT NULL,
+    sender_id BIGINT NOT NULL,
+    message TEXT NOT NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (rental_id) REFERENCES rentals(id) ON DELETE CASCADE,
+    FOREIGN KEY (sender_id) REFERENCES users(id) ON DELETE CASCADE
+);
