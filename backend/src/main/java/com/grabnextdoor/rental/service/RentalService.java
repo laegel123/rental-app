@@ -11,6 +11,9 @@ import com.grabnextdoor.user.entity.User;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 @Service
 public class RentalService {
 
@@ -112,6 +115,22 @@ public class RentalService {
         rental.setStatus(RentalStatus.COMPLETED);
         Rental savedRental = rentalRepository.save(rental);
         return convertToDto(savedRental);
+    }
+
+    @Transactional(readOnly = true)
+    public List<RentalResponseDto> getRentalsByBorrower(User borrower) {
+        return rentalRepository.findByBorrowerIdOrderByCreatedAtDesc(borrower.getId())
+                .stream()
+                .map(this::convertToDto)
+                .collect(Collectors.toList());
+    }
+
+    @Transactional(readOnly = true)
+    public List<RentalResponseDto> getRentalsByOwner(User owner) {
+        return rentalRepository.findByItemOwnerIdOrderByCreatedAtDesc(owner.getId())
+                .stream()
+                .map(this::convertToDto)
+                .collect(Collectors.toList());
     }
 
     private RentalResponseDto convertToDto(Rental rental) {

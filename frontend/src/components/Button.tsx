@@ -1,14 +1,16 @@
 import React from 'react';
 
 interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
-  variant?: 'primary' | 'secondary' | 'outline';
+  variant?: 'primary' | 'secondary' | 'outline' | 'danger';
   size?: 'sm' | 'md' | 'lg';
+  fullWidth?: boolean;
 }
 
 const Button: React.FC<ButtonProps> = ({ 
   children, 
   variant = 'primary', 
   size = 'md', 
+  fullWidth = false,
   className = '', 
   ...props 
 }) => {
@@ -18,6 +20,7 @@ const Button: React.FC<ButtonProps> = ({
     primary: 'bg-teal-600 text-white hover:bg-teal-700',
     secondary: 'bg-gray-200 text-gray-800 hover:bg-gray-300',
     outline: 'border border-teal-600 text-teal-600 hover:bg-teal-600 hover:text-white',
+    danger: 'bg-red-600 text-white hover:bg-red-700',
   };
   
   const sizes = {
@@ -26,9 +29,11 @@ const Button: React.FC<ButtonProps> = ({
     lg: 'px-6 py-3 text-lg',
   };
 
+  const widthStyle = fullWidth ? 'w-full' : '';
+
   return (
     <button
-      className={`${baseStyles} ${variants[variant]} ${sizes[size]} ${className}`}
+      className={`${baseStyles} ${variants[variant]} ${sizes[size]} ${widthStyle} ${className}`}
       {...props}
     >
       {children}

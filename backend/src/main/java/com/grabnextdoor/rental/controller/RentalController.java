@@ -11,6 +11,8 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/rentals")
 public class RentalController {
@@ -27,6 +29,18 @@ public class RentalController {
     public ResponseEntity<RentalResponseDto> requestRental(@RequestBody CreateRentalRequestDto request) {
         User user = getCurrentUser();
         return ResponseEntity.ok(rentalService.requestRental(request, user));
+    }
+
+    @GetMapping("/my-requests")
+    public ResponseEntity<List<RentalResponseDto>> getMyRequests() {
+        User user = getCurrentUser();
+        return ResponseEntity.ok(rentalService.getRentalsByBorrower(user));
+    }
+
+    @GetMapping("/my-items")
+    public ResponseEntity<List<RentalResponseDto>> getMyItemRequests() {
+        User user = getCurrentUser();
+        return ResponseEntity.ok(rentalService.getRentalsByOwner(user));
     }
 
     @PostMapping("/{id}/accept")

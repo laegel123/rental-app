@@ -14,6 +14,9 @@ const Header: React.FC = () => {
           {isAuthenticated ? (
             <>
               <span className="text-sm text-gray-500 mr-2 hidden md:inline">Hello, {user}</span>
+              <Link to="/reservations" className="text-teal-600 hover:text-teal-700 font-semibold text-sm">
+                My Reservations
+              </Link>
               <Button variant="outline" size="sm" onClick={logout}>
                 Logout
               </Button>

@@ -1,4 +1,5 @@
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
 import Button from './Button';
 
 interface ItemCardProps {
@@ -16,6 +17,8 @@ const ItemCard: React.FC<ItemCardProps> = ({
   price, 
   imageUrl = "https://placehold.co/400x300?text=Item" 
 }) => {
+  const navigate = useNavigate();
+
   return (
     <div className="bg-white rounded-lg shadow-lg overflow-hidden transition-transform duration-300 hover:-translate-y-1">
       <img 
@@ -33,7 +36,11 @@ const ItemCard: React.FC<ItemCardProps> = ({
               <span className="text-sm font-normal text-gray-500">/day</span>
             </span>
           </div>
-          <Button variant="primary" size="sm">
+          <Button 
+            variant="primary" 
+            size="sm"
+            onClick={() => navigate(`/item/${id}`)}
+          >
             Details
           </Button>
         </div>
