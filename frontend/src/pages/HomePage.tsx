@@ -1,8 +1,26 @@
+import { useEffect, useState } from 'react';
 import Header from '../components/Header';
 import SearchBar from '../components/SearchBar';
 import ItemCard from '../components/ItemCard';
+import itemService from '../services/itemService';
+import type { ItemResponse } from '../services/itemService';
 
 const HomePage = () => {
+  const [items, setItems] = useState<ItemResponse[]>([]);
+
+  useEffect(() => {
+    fetchItems();
+  }, []);
+
+  const fetchItems = async () => {
+    try {
+      const data = await itemService.getAllItems();
+      setItems(data);
+    } catch (err) {
+      console.error(err);
+    }
+  };
+
   const sampleItems = [
     {
       id: 1,
@@ -34,6 +52,8 @@ const HomePage = () => {
     }
   ];
 
+  const displayItems = [...items, ...sampleItems.filter(si => !items.find(i => i.id === si.id))];
+
   return (
     <div className="min-h-screen bg-gray-50">
       <Header />
@@ -53,7 +73,7 @@ const HomePage = () => {
           </div>
           
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-            {sampleItems.map(item => (
+            {displayItems.map(item => (
               <ItemCard key={item.id} {...item} />
             ))}
           </div>

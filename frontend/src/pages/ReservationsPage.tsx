@@ -1,9 +1,10 @@
 import { useEffect, useState } from 'react';
 import Header from '../components/Header';
 import Button from '../components/Button';
+import ReviewModal from '../components/ReviewModal';
 import rentalService, { RENTAL_STATUS } from '../services/rentalService';
 import type { RentalResponse, RentalStatus } from '../services/rentalService';
-import { Calendar, Package, RefreshCw, CheckCircle, XCircle, Info, MessageCircle } from 'lucide-react';
+import { Calendar, Package, RefreshCw, CheckCircle, XCircle, Info, MessageCircle, Star } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 
 const ReservationsPage = () => {
@@ -11,6 +12,9 @@ const ReservationsPage = () => {
   const [myItemsRequests, setMyItemsRequests] = useState<RentalResponse[]>([]);
   const [loading, setLoading] = useState(true);
   const [activeTab, setActiveTab] = useState<'requests' | 'items'>('requests');
+  const [isReviewModalOpen, setIsReviewModalOpen] = useState(false);
+  const [selectedRentalForReview, setSelectedRentalForReview] = useState<RentalResponse | null>(null);
+  const [reviewRole, setReviewRole] = useState<'borrower' | 'owner'>('borrower');
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -32,6 +36,12 @@ const ReservationsPage = () => {
     } finally {
       setLoading(false);
     }
+  };
+
+  const handleOpenReview = (rental: RentalResponse, role: 'borrower' | 'owner') => {
+    setSelectedRentalForReview(rental);
+    setReviewRole(role);
+    setIsReviewModalOpen(true);
   };
 
   const handleStatusChange = async (id: number, action: 'accept' | 'decline' | 'start' | 'return') => {
@@ -73,7 +83,7 @@ const ReservationsPage = () => {
             <div>
               <h3 className="text-xl font-bold text-gray-800">{rental.itemName}</h3>
               <p className="text-gray-500 text-sm">
-                {isOwner ? `Borrower: ${rental.borrowerUsername}` : 'Borrowing from: Owner'}
+                {isOwner ? `Borrower: ${rental.borrowerUsername}` : `Owner: ${rental.ownerUsername}`}
               </p>
             </div>
           </div>
@@ -100,6 +110,17 @@ const ReservationsPage = () => {
           >
             <MessageCircle className="w-4 h-4 mr-1" /> Chat
           </Button>
+
+          {rental.status === RENTAL_STATUS.COMPLETED && (
+            <Button 
+              variant="outline" 
+              size="sm" 
+              className="flex items-center border-yellow-500 text-yellow-600 hover:bg-yellow-50"
+              onClick={() => handleOpenReview(rental, isOwner ? 'owner' : 'borrower')}
+            >
+              <Star className="w-4 h-4 mr-1" /> Write Review
+            </Button>
+          )}
 
           {isOwner && rental.status === RENTAL_STATUS.REQUESTED && (
             <>
@@ -178,6 +199,21 @@ const ReservationsPage = () => {
           </div>
         )}
       </main>
+
+      {selectedRentalForReview && (
+        <ReviewModal
+          isOpen={isReviewModalOpen}
+          onClose={() => setIsReviewModalOpen(false)}
+          itemId={selectedRentalForReview.itemId}
+          itemName={selectedRentalForReview.itemName}
+          revieweeId={reviewRole === 'borrower' ? selectedRentalForReview.ownerId : selectedRentalForReview.borrowerId}
+          revieweeName={reviewRole === 'borrower' ? selectedRentalForReview.ownerUsername : selectedRentalForReview.borrowerUsername}
+          onSuccess={() => {
+            alert('Review submitted successfully!');
+            fetchReservations();
+          }}
+        />
+      )}
     </div>
   );
 };

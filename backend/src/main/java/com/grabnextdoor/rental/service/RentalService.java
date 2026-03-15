@@ -133,11 +133,26 @@ public class RentalService {
                 .collect(Collectors.toList());
     }
 
+    @Transactional(readOnly = true)
+    public RentalResponseDto getRentalById(Long rentalId, User currentUser) {
+        Rental rental = rentalRepository.findById(rentalId)
+                .orElseThrow(() -> new RuntimeException("Rental not found"));
+
+        if (!rental.getBorrower().getId().equals(currentUser.getId()) &&
+                !rental.getItem().getOwner().getId().equals(currentUser.getId())) {
+            throw new RuntimeException("Unauthorized: You are not part of this rental");
+        }
+
+        return convertToDto(rental);
+    }
+
     private RentalResponseDto convertToDto(Rental rental) {
         RentalResponseDto dto = new RentalResponseDto();
         dto.setId(rental.getId());
         dto.setItemId(rental.getItem().getId());
         dto.setItemName(rental.getItem().getName());
+        dto.setOwnerId(rental.getItem().getOwner().getId());
+        dto.setOwnerUsername(rental.getItem().getOwner().getUsername());
         dto.setBorrowerId(rental.getBorrower().getId());
         dto.setBorrowerUsername(rental.getBorrower().getUsername());
         dto.setStartDate(rental.getStartDate());

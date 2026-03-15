@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/rentals")
+@RequestMapping("/api/rentals")
 public class RentalController {
 
     private final RentalService rentalService;
@@ -41,6 +41,12 @@ public class RentalController {
     public ResponseEntity<List<RentalResponseDto>> getMyItemRequests() {
         User user = getCurrentUser();
         return ResponseEntity.ok(rentalService.getRentalsByOwner(user));
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<RentalResponseDto> getRentalById(@PathVariable Long id) {
+        User user = getCurrentUser();
+        return ResponseEntity.ok(rentalService.getRentalById(id, user));
     }
 
     @PostMapping("/{id}/accept")

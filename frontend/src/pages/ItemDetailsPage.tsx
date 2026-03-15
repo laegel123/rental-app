@@ -100,9 +100,12 @@ const ItemDetailsPage = () => {
               </span>
             </div>
 
-            <div className="flex items-center text-gray-600 mb-6">
+            <div 
+              className="flex items-center text-gray-600 mb-6 cursor-pointer hover:text-teal-600 transition-colors"
+              onClick={() => navigate(`/profile/${item.ownerId}`)}
+            >
               <User className="w-4 h-4 mr-2" />
-              <span>Owner: <span className="font-semibold">{item.ownerUsername}</span></span>
+              <span>Owner: <span className="font-semibold underline">{item.ownerUsername}</span></span>
             </div>
 
             <p className="text-gray-600 mb-8 leading-relaxed">

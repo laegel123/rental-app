@@ -8,6 +8,8 @@ public class RentalResponseDto {
     private Long id;
     private Long itemId;
     private String itemName;
+    private Long ownerId;
+    private String ownerUsername;
     private Long borrowerId;
     private String borrowerUsername;
     private LocalDate startDate;
@@ -37,6 +39,22 @@ public class RentalResponseDto {
 
     public void setItemName(String itemName) {
         this.itemName = itemName;
+    }
+
+    public Long getOwnerId() {
+        return ownerId;
+    }
+
+    public void setOwnerId(Long ownerId) {
+        this.ownerId = ownerId;
+    }
+
+    public String getOwnerUsername() {
+        return ownerUsername;
+    }
+
+    public void setOwnerUsername(String ownerUsername) {
+        this.ownerUsername = ownerUsername;
     }
 
     public Long getBorrowerId() {

@@ -1,10 +1,16 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import Button from './Button';
 import { useAuth } from '../contexts/AuthContext';
 
 const Header: React.FC = () => {
   const { isAuthenticated, user, logout } = useAuth();
+  const navigate = useNavigate();
+
+  const handleLogout = () => {
+    logout();
+    navigate('/auth');
+  };
 
   return (
     <header className="bg-white shadow-md sticky top-0 z-10">
@@ -14,10 +20,13 @@ const Header: React.FC = () => {
           {isAuthenticated ? (
             <>
               <span className="text-sm text-gray-500 mr-2 hidden md:inline">Hello, {user}</span>
+              <Link to="/post-item" className="text-teal-600 hover:text-teal-700 font-semibold text-sm">
+                Post Item
+              </Link>
               <Link to="/reservations" className="text-teal-600 hover:text-teal-700 font-semibold text-sm">
                 My Reservations
               </Link>
-              <Button variant="outline" size="sm" onClick={logout}>
+              <Button variant="outline" size="sm" onClick={handleLogout}>
                 Logout
               </Button>
             </>

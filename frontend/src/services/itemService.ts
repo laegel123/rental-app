@@ -20,6 +20,14 @@ const getAuthHeaders = () => {
   };
 };
 
+export interface CreateItemRequest {
+  name: string;
+  description: string;
+  price: number;
+  deposit: number;
+  categoryId: number;
+}
+
 const itemService = {
   getAllItems: async (): Promise<ItemResponse[]> => {
     const response = await axios.get(API_URL, { headers: getAuthHeaders() });
@@ -28,6 +36,16 @@ const itemService = {
 
   getItemById: async (id: number): Promise<ItemResponse> => {
     const response = await axios.get(`${API_URL}/${id}`, { headers: getAuthHeaders() });
+    return response.data;
+  },
+
+  createItem: async (request: CreateItemRequest): Promise<ItemResponse> => {
+    const response = await axios.post(API_URL, request, { headers: getAuthHeaders() });
+    return response.data;
+  },
+
+  updateItem: async (id: number, request: CreateItemRequest): Promise<ItemResponse> => {
+    const response = await axios.put(`${API_URL}/${id}`, request, { headers: getAuthHeaders() });
     return response.data;
   },
 

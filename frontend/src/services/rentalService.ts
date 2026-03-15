@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const API_URL = '/rentals';
+const API_URL = '/api/rentals';
 
 export interface CreateRentalRequest {
   itemId: number;
@@ -24,6 +24,8 @@ export interface RentalResponse {
   id: number;
   itemId: number;
   itemName: string;
+  ownerId: number;
+  ownerUsername: string;
   borrowerId: number;
   borrowerUsername: string;
   startDate: string;
@@ -52,6 +54,11 @@ const rentalService = {
 
   getMyItems: async (): Promise<RentalResponse[]> => {
     const response = await axios.get(`${API_URL}/my-items`, { headers: getAuthHeaders() });
+    return response.data;
+  },
+
+  getRentalById: async (id: number): Promise<RentalResponse> => {
+    const response = await axios.get(`${API_URL}/${id}`, { headers: getAuthHeaders() });
     return response.data;
   },
 

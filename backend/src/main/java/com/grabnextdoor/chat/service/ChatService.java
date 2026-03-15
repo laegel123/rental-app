@@ -27,15 +27,12 @@ public class ChatService {
     }
 
     @Transactional
-    public ChatMessageDto saveMessage(Long rentalId, Long senderId, String message) {
+    public ChatMessageDto saveMessage(Long rentalId, User sender, String message) {
         Rental rental = rentalRepository.findById(rentalId)
                 .orElseThrow(() -> new RuntimeException("Rental not found"));
 
-        User sender = userRepository.findById(senderId)
-                .orElseThrow(() -> new RuntimeException("User not found"));
-
         // Basic authorization: only borrower or item owner can send messages
-        if (!rental.getBorrower().getId().equals(senderId) && !rental.getItem().getOwner().getId().equals(senderId)) {
+        if (!rental.getBorrower().getId().equals(sender.getId()) && !rental.getItem().getOwner().getId().equals(sender.getId())) {
             throw new RuntimeException("Unauthorized: User is not part of this rental");
         }
 
@@ -46,6 +43,13 @@ public class ChatService {
 
         ChatMessage savedMessage = chatMessageRepository.save(chatMessage);
         return convertToDto(savedMessage);
+    }
+
+    @Transactional
+    public ChatMessageDto saveMessage(Long rentalId, Long senderId, String message) {
+        User sender = userRepository.findById(senderId)
+                .orElseThrow(() -> new RuntimeException("User not found"));
+        return saveMessage(rentalId, sender, message);
     }
 
     @Transactional(readOnly = true)

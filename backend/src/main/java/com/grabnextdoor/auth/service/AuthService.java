@@ -1,5 +1,6 @@
 package com.grabnextdoor.auth.service;
 
+import com.grabnextdoor.auth.dto.JwtResponseDto;
 import com.grabnextdoor.auth.dto.LoginRequestDto;
 import com.grabnextdoor.auth.dto.SignUpRequestDto;
 import com.grabnextdoor.auth.util.JwtUtils;
@@ -11,6 +12,7 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import reactor.core.publisher.Mono;
@@ -54,11 +56,16 @@ public class AuthService {
                 });
     }
 
-    public String authenticateUser(LoginRequestDto loginRequest) {
+    public JwtResponseDto authenticateUser(LoginRequestDto loginRequest) {
         Authentication authentication = authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(loginRequest.getEmail(), loginRequest.getPassword()));
 
         SecurityContextHolder.getContext().setAuthentication(authentication);
-        return jwtUtils.generateJwtToken(authentication);
+        String jwt = jwtUtils.generateJwtToken(authentication);
+
+        User user = userRepository.findByEmail(loginRequest.getEmail())
+                .orElseThrow(() -> new UsernameNotFoundException("User not found with email: " + loginRequest.getEmail()));
+
+        return new JwtResponseDto(jwt, user.getId(), user.getUsername(), user.getEmail());
     }
 }

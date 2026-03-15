@@ -23,7 +23,7 @@ const AuthPage = () => {
     setLoading(true);
     try {
       const data = await loginApi(email, password);
-      login(data.accessToken, email);
+      login(data.accessToken, email, data.id, data.username);
       navigate('/');
     } catch (err: any) {
       setError(err.message || 'Login failed');
